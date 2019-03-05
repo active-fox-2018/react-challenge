@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import News from './containers/news.jsx'
+import News from './containers/News.jsx'
+import Login from './containers/Login.jsx'
+import PrivateRoute from './helpers/PrivateRoute.jsx'
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom'
 
 class App extends Component {
@@ -23,10 +25,11 @@ class App extends Component {
             </a>
           </header>
           <Switch>
-            <Route exact path="/" component={News} />
-            <Route path="/category/:category" component={News} />
-            <Route path="/search/:search" component={News} />
-            <Route render={(props) => <h3>cari apa cuuuy</h3>} />
+            <PrivateRoute exact path="/" component={News} />
+            <Route exact path="/login" component={Login} />
+            <PrivateRoute path="/category/:category" component={News} />
+            <PrivateRoute path="/search/:search" component={News} />
+            <Route render={(props) => <h1>Page not found</h1>} />
           </Switch>
         </div>
       </BrowserRouter>

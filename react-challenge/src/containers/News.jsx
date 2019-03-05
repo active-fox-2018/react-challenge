@@ -4,7 +4,7 @@ import NewsCategory from './news/NewsCategory.jsx'
 import NewsSearch from './news/NewsSearch.jsx'
 import { Link } from 'react-router-dom'
 
-export default class news extends Component {
+export default class News extends Component {
     state = {
         newsData: [{ title: 'Loading...', source: {}, publishedAt: new Date().toISOString() }],
         categories: 'business entertainment general health science sports technology'.split(' '),
