@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import News from './containers/News.jsx'
+import Favorites from './containers/Favorites.jsx'
 import Login from './containers/Login.jsx'
+import Logout from './containers/Logout.jsx'
 import PrivateRoute from './helpers/PrivateRoute.jsx'
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
@@ -27,11 +29,21 @@ class App extends Component {
               >
               </a>
             </header>
+            {localStorage.getItem('token') ?
+              <div className="container">
+                <div className="row">
+                  <Link to="/" className="col btn btn-light">All news</Link>
+                  <Link to="/favorites" className="col btn btn-light">Favorites</Link>
+                  <Link to="/logout" className="col btn btn-light">Logout</Link>
+                </div>
+              </div> : ''}
             <Switch>
               <PrivateRoute exact path="/" component={News} />
               <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/logout" component={Logout} />
               <PrivateRoute path="/category/:category" component={News} />
               <PrivateRoute path="/search/:search" component={News} />
+              <PrivateRoute exact path="/favorites" component={Favorites} />
               <Route render={(props) => <h1>Page not found</h1>} />
             </Switch>
           </div>

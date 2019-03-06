@@ -21,13 +21,11 @@ async function add(article) {
         article
     }).catch(error)
     console.log("Document written with ID: ", docRef.id);
-    get()
 }
 
 async function remove(id) {
     await db.collection("favorites").doc(id).delete().catch(error)
     console.log("Document successfully deleted!");
-    get()
 }
 
 function error(error) {

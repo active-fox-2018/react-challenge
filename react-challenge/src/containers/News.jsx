@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import NewsCard from './news/NewsCard.jsx'
 import NewsCategory from './news/NewsCategory.jsx'
 import NewsSearch from './news/NewsSearch.jsx'
-import * as favorites from '../api/favorites.js'
-import { getNews } from '../api/news.js'
 import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { updateNewsData } from '../store/actions/news.js'
+import { updateFavoritesData } from '../store/actions/favorites.js'
 // import {bindActionCreators} from 'redux'
 
 class News extends Component {
@@ -17,7 +16,6 @@ class News extends Component {
 
     componentDidMount() {
         this.getNews()
-        this.getFavorites()
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -30,27 +28,27 @@ class News extends Component {
     }
 
     async getNews() {
-        this.props.updateNewsData([{ title: 'Loading...', source: {}, publishedAt: new Date().toISOString() }])
         const category = this.props.match.params.category || ''
         const search = this.props.match.params.search || ''
-
-        let newsData = await getNews(category, search)
-        this.props.updateNewsData(newsData.data.articles)
-        console.log(this.props.newsData)
-    }
-
-    async getFavorites() {
-        this.props.updateFavoritesData([{ title: 'Loading...', source: {}, publishedAt: new Date().toISOString() }])
-        let favoritesData = await favorites.get()
-        this.props.updateFavoritesData(favoritesData.articles)
-        console.log(this.props.favoritesData)
+        await this.props.updateFavoritesData()
+        await this.props.updateNewsData(category, search)
     }
 
     render() {
         const { categories } = this.state
-        const { newsData } = this.props
+        const { newsData, favoritesData } = this.props
         const search = this.props.match.params.search || ''
         const selectedCategory = this.props.match.params.category || ''
+
+        if (newsData.length === 0) {
+            return (
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
+            )
+        }
 
         return (
             <div className="container">
@@ -59,21 +57,21 @@ class News extends Component {
                     {categories.map((category, i) => <NewsCategory key={i} selectedCategory={selectedCategory} category={category}></NewsCategory>)}
                     <NewsSearch search={search}></NewsSearch>
                 </div>
-                {newsData.map((article, i) => <NewsCard key={i} article={article}></NewsCard>)}
+                {newsData.map((article, i) => <NewsCard key={i} article={article} favoritesData={favoritesData}></NewsCard>)}
             </div>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
-    newsData: state.newsData,
-    favoritesData: state.favoritesData,
+    newsData: state.news.newsData,
+    favoritesData: state.favorites.favoritesData,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    updateNewsData: (newsData) => dispatch(updateNewsData(newsData)),
-    updateFavoritesData: (favoritesData) => dispatch(updateFavoritesData(favoritesData)),
+    updateNewsData: (category, search) => dispatch(updateNewsData(category, search)),
+    updateFavoritesData: (category, search) => dispatch(updateFavoritesData(category, search)),
 })
-// const mapDispatchToProps = (dispatch) => bindActionCreators({updateNewsData,updateFavoritesData}, dispatch)
+// const mapDispatchToProps = (dispatch) => bindActionCreators({updateNewsData,updateFavoriteData}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(News)

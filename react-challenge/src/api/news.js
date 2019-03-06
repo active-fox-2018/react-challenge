@@ -14,7 +14,7 @@ async function getNews(category, search) {
             'Authorization': 'Bearer 2ee86e45c1cb43b5b559d8042d629fca'
         }
     })
-    return newsData
+    return newsData.data
 }
 
 export { getNews }

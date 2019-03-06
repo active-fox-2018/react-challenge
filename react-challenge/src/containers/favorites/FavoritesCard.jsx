@@ -1,19 +1,20 @@
 import React, { Component } from 'react'
 import * as favorites from '../../api/favorites.js'
 
-export default class newscard extends Component {
+export default class FavoritesCard extends Component {
     state = {
-        favoriteStatus: this.props.favoritesData.map(e => e.article.url).includes(this.props.article.url) ? 'added' : 'unadded'
+        favoriteStatus: 'unremoved'
     }
 
-    addToFavorites = async () => {
-        this.setState({ favoriteStatus: 'adding' })
-        await favorites.add(this.props.article)
-        this.setState({ favoriteStatus: 'added' })
+    removeFromFavorites = async () => {
+        this.setState({favoriteStatus:'removing'})
+        await favorites.remove(this.props.favorite.id)
+        this.setState({favoriteStatus:'removed'})
     }
 
     render() {
-        const { article } = this.props
+        const { favorite } = this.props
+        const article = favorite.article
 
         return (
             <div className="row">
@@ -27,9 +28,9 @@ export default class newscard extends Component {
                         <h6 className="card-subtitle mb-2 text-muted">{new Date(article.publishedAt).toLocaleString()}</h6>
                         <a href={article.url} className="card-link">{article.url}</a>
                         <br />
-                        {this.state.favoriteStatus === 'unadded' ? <button className="btn btn-info" onClick={() => this.addToFavorites()}>Add to favorites</button> : ''}
-                        {this.state.favoriteStatus === 'added' ? <button className="btn btn-info" disabled>Added to favorites</button> : ''}
-                        {this.state.favoriteStatus === 'adding' ? <button className="btn btn-info spinner-border" disabled>|</button> : ''}
+                        {this.state.favoriteStatus === 'unremoved' ? <button className="btn btn-info" onClick={() => this.removeFromFavorites()}>Remove from favorites</button> : ''}
+                        {this.state.favoriteStatus === 'removed' ? <button className="btn btn-info" disabled>Removed from favorites</button> : ''}
+                        {this.state.favoriteStatus === 'removing' ? <button className="btn btn-info spinner-border" disabled>|</button> : ''}
                     </div>
                 </div>
             </div>
