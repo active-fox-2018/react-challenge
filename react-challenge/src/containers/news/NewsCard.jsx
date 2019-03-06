@@ -1,7 +1,12 @@
 import React from 'react'
+import * as favorites from '../../api/favorites.js'
 
 export default function newscard(props) {
     const { article } = props
+
+    const addToFavorites = async () => {
+        await favorites.add(article)
+    }
 
     return (
         <div className="row">
@@ -14,6 +19,7 @@ export default function newscard(props) {
                     <p className="card-text">{article.description}</p>
                     <h6 className="card-subtitle mb-2 text-muted">{new Date(article.publishedAt).toLocaleString()}</h6>
                     <a href={article.url} className="card-link">{article.url}</a>
+                    <button className="btn btn-light" onClick={() => addToFavorites()}>Add to favorites</button>
                 </div>
             </div>
         </div>

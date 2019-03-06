@@ -2,55 +2,53 @@ import React, { Component } from 'react'
 import NewsCard from './news/NewsCard.jsx'
 import NewsCategory from './news/NewsCategory.jsx'
 import NewsSearch from './news/NewsSearch.jsx'
+import * as favorites from '../api/favorites.js'
+import { getNews } from '../api/news.js'
 import { Link } from 'react-router-dom'
 
-export default class News extends Component {
+import { connect } from 'react-redux'
+import { updateNewsData } from '../store/actions/news.js'
+// import {bindActionCreators} from 'redux'
+
+class News extends Component {
     state = {
-        newsData: [{ title: 'Loading...', source: {}, publishedAt: new Date().toISOString() }],
         categories: 'business entertainment general health science sports technology'.split(' '),
-        path: ''
     }
 
     componentDidMount() {
-        this.getTopHeadlineNews()
+        this.getNews()
+        this.getFavorites()
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.match.params.category !== this.props.match.params.category) {
-            this.getTopHeadlineNews()
+            this.getNews()
         }
         if (prevProps.match.params.search !== this.props.match.params.search) {
-            this.getTopHeadlineNews()
+            this.getNews()
         }
     }
 
-    async getTopHeadlineNews() {
-        this.setState({
-            newsData: [{ title: 'Loading...', source: {}, publishedAt: new Date().toISOString() }],
-        })
-        let url = ''
+    async getNews() {
+        this.props.updateNewsData([{ title: 'Loading...', source: {}, publishedAt: new Date().toISOString() }])
         const category = this.props.match.params.category || ''
         const search = this.props.match.params.search || ''
 
-        if (search !== '') {
-            url = `https://newsapi.org/v2/everything?q=${search}&language=en`
-        } else {
-            url = `https://newsapi.org/v2/top-headlines?q=&category=${category}&country=us`
-        }
-        let newsData = await window.axios({
-            url,
-            headers: {
-                'Authorization': 'Bearer 2ee86e45c1cb43b5b559d8042d629fca'
-            }
-        })
-        this.setState({
-            newsData: newsData.data.articles
-        })
-        console.log(this.state.newsData)
+        let newsData = await getNews(category, search)
+        this.props.updateNewsData(newsData.data.articles)
+        console.log(this.props.newsData)
+    }
+
+    async getFavorites() {
+        this.props.updateFavoritesData([{ title: 'Loading...', source: {}, publishedAt: new Date().toISOString() }])
+        let favoritesData = await favorites.get()
+        this.props.updateFavoritesData(favoritesData.articles)
+        console.log(this.props.favoritesData)
     }
 
     render() {
-        const { newsData, categories } = this.state
+        const { categories } = this.state
+        const { newsData } = this.props
         const search = this.props.match.params.search || ''
         const selectedCategory = this.props.match.params.category || ''
 
@@ -66,3 +64,16 @@ export default class News extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => ({
+    newsData: state.newsData,
+    favoritesData: state.favoritesData,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    updateNewsData: (newsData) => dispatch(updateNewsData(newsData)),
+    updateFavoritesData: (favoritesData) => dispatch(updateFavoritesData(favoritesData)),
+})
+// const mapDispatchToProps = (dispatch) => bindActionCreators({updateNewsData,updateFavoritesData}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(News)
