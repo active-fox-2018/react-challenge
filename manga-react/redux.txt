@@ -1,0 +1,21 @@
+yarn add redux react-redux
+
+file store.js
+
+bikin store isi function, yang handle state nya
+
+bungkus root app dengan provider
+
+bindActionCreators
+
+bikin store
+isi reducers dan actions
+
+
+connect hanya ke component yang butuh aja
+
+
+
+logical process di actions 
+
+di reducers hanya terima data jadi
