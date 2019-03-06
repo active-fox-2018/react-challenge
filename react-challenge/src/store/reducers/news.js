@@ -1,5 +1,5 @@
 const defaultState = {
-    newsData: [],
+    newsData: { status: 'loading' },
 }
 
 export default function (state = defaultState, action) {

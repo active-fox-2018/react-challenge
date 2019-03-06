@@ -29,14 +29,6 @@ class App extends Component {
               >
               </a>
             </header>
-            {localStorage.getItem('token') ?
-              <div className="container">
-                <div className="row">
-                  <Link to="/" className="col btn btn-light">All news</Link>
-                  <Link to="/favorites" className="col btn btn-light">Favorites</Link>
-                  <Link to="/logout" className="col btn btn-light">Logout</Link>
-                </div>
-              </div> : ''}
             <Switch>
               <PrivateRoute exact path="/" component={News} />
               <Route exact path="/login" component={Login} />

@@ -4,7 +4,7 @@ export function updateNewsData(category, search) {
     category = category || ''
     search = search || ''
 
-    let newsData = []
+    let newsData = { status: 'loading' }
 
     return async (dispatch) => {
         dispatch({
@@ -12,7 +12,7 @@ export function updateNewsData(category, search) {
             newsData,
         })
         newsData = await getNews(category, search)
-        newsData = newsData.articles
+        newsData = newsData
         dispatch({
             type: 'UPDATE_NEWSDATA',
             newsData,

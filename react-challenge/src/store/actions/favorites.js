@@ -1,7 +1,7 @@
 import * as favorites from '../../api/favorites.js'
 
 export function updateFavoritesData() {
-    let favoritesData = []
+    let favoritesData = [{ status: 'loading' }]
 
     return async (dispatch) => {
         dispatch({

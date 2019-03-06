@@ -40,12 +40,20 @@ class News extends Component {
         const search = this.props.match.params.search || ''
         const selectedCategory = this.props.match.params.category || ''
 
-        if (newsData.length === 0) {
+        if (newsData.status === 'loading') {
             return (
                 <div className="d-flex justify-content-center">
                     <div className="spinner-border" role="status">
                         <span className="sr-only">Loading...</span>
                     </div>
+                    Loading...
+                </div>
+            )
+        } else if (newsData.articles.length === 0) {
+            return (
+                <div className="d-flex justify-content-center">
+                    No news found | 
+                    <Link to="/">Go back</Link>
                 </div>
             )
         }
@@ -53,11 +61,16 @@ class News extends Component {
         return (
             <div className="container">
                 <div className="row">
+                    <Link to="/" className="col btn btn-light">All news</Link>
+                    <Link to="/favorites" className="col btn btn-light">Favorites</Link>
+                    <Link to="/logout" className="col btn btn-light">Logout</Link>
+                </div>
+                <div className="row">
                     <Link to="/" className="col btn btn-light">⌂</Link>
                     {categories.map((category, i) => <NewsCategory key={i} selectedCategory={selectedCategory} category={category}></NewsCategory>)}
                     <NewsSearch search={search}></NewsSearch>
                 </div>
-                {newsData.map((article, i) => <NewsCard key={i} article={article} favoritesData={favoritesData}></NewsCard>)}
+                {newsData.articles.map((article, i) => <NewsCard key={i} article={article} favoritesData={favoritesData}></NewsCard>)}
             </div>
         )
     }
