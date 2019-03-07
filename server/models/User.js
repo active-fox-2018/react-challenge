@@ -31,6 +31,10 @@ var userSchema = new Schema({
     password: {
         type: String,
     },
+    provider: {
+        type: String,
+        default: 'manual'
+    },
     fav: [{
         type: Schema.Types.ObjectId,
         ref: 'Fav'

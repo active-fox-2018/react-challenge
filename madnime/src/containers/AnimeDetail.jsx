@@ -1,35 +1,37 @@
 import React, { Component } from 'react'
-import jikan from '../api/jikan'
+//Store
+import { connect } from 'react-redux'
+import { sendDetail } from '../store/actions/animes'
+import { addFav, delOne } from '../store/actions/fav'
+import { bindActionCreators } from 'redux'
 
-export default class AnimeDetail extends Component {
-  state = {
-    anime: {}
-  }
-
-  fetch () {
-    jikan({
-      method: 'get',
-      url: `/anime/${this.props.match.params.id}`
-    })
-    .then(data => {
-      this.setState({
-        anime: data.data
-      })
-    })
-  }
-
+class AnimeDetail extends Component {
   componentDidMount () {
-    this.fetch()
+    // console.log(this.props.fav, this.props.user)
+    this.props.sendDetail(this.props.match.params.id)
+  }
+
+  addFav = () => {
+    this.props.addFav({anime: this.props.anime})
+  }
+
+  removeFav = (index) => {
+    let id = this.props.fav[index]._id
+    this.props.delOne(id)
   }
   
   render() {
-    let { anime } = this.state
+    let { anime, user, fav } = this.props
+    let index
+    if (fav[0]) {
+       index = fav.findIndex(el => String(el.anime.mal_id) === String(anime.mal_id))
+    }
     return (
-      <React.Fragment>
-         {
-            !anime.mal_id &&
-            <img style={{ width: '40vw', height: '65vh'}} className="container mx-auto" src="https://newvitruvian.com/images/spinner-svg-cartoon-4.gif" alt="loading"/>
-          }
+      <>
+      {
+        !anime.mal_id &&
+        <img style={{ width: '40vw', height: '65vh'}} className="container mx-auto" src="https://newvitruvian.com/images/spinner-svg-cartoon-4.gif" alt="loading"/>
+      }
       <div className="mx-5 mt-3">
         { anime.mal_id &&
           <div className="card mb-3">
@@ -75,7 +77,14 @@ export default class AnimeDetail extends Component {
                 <div style={{ borderBottom: '1px solid lightgrey'}} className="row mr-2 ml-2">
                   <a href={anime.url} className="col text-left"> <h3> { anime.title }</h3></a>
                   <div className="col-1">
-                    <h2><i className="far fa-star"></i></h2>
+                  {
+                    user && (fav.length === 0 || index === -1) &&
+                    <h2><i onClick={this.addFav} style={{color: 'yellow'}} className="far fa-star click-able"></i></h2>
+                  }
+                  {
+                    user && fav[0] && index !== -1 &&
+                    <h2><i onClick={() => this.removeFav(index)} style={{color: 'yellow'}} className="fas fa-star click-able"></i></h2>
+                  }
                   </div>
                 </div>
 
@@ -125,7 +134,18 @@ export default class AnimeDetail extends Component {
         </div>
         }
         </div>
-      </React.Fragment>
+      </>
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  anime: state.animes.anime,
+  fav: state.user.fav,
+  user: state.user.user
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ sendDetail, addFav, delOne}, dispatch)
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnimeDetail)

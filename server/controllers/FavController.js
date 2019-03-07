@@ -38,12 +38,13 @@ class FavController {
     static deleteOne (req, res) {
         req.currentFav.remove()
             .then(data => {
-                return User.findByIdAndUpdate(req.currentUser._id, { $pull: { fav: req.currentFav._id } }, {new: true}).populate('anime').execPopulate()
+                return User.findByIdAndUpdate(req.currentUser._id, { $pull: { fav: req.currentFav._id } }, {new: true})
             })
-            .then(populated => {
-                res.status(200).json(populated)
+            .then(updated => {
+                res.status(200).json(updated)
             })
             .catch(err => {
+                console.log(err)
                 res.status(500).json({
                     msg: err.message
                 })

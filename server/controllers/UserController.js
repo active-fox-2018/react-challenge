@@ -3,6 +3,39 @@ const jwt = require('jsonwebtoken')
 const { comparePass } = require('../helpers')
 
 class Controller {
+    static gooSign (req, res) {
+        User.findOne({ email: req.body.email })
+            .then(dataUser => {
+                let newUser = {
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: 'google',
+                    provider: 'google'
+                }
+                if (!dataUser) {
+                    return User.create(newUser)
+                } else {
+                    res.status(200).json({
+                        data: dataUser,
+                        token: jwt.sign({ id: dataUser._id }, process.env.JWT)
+                    })
+                }
+            })
+            .then(data => {
+                if (data) {
+                    res.status(201).json({
+                        data,
+                        token: jwt.sign({ id: data._id }, process.env.JWT)
+                    })
+                }
+            })
+            .catch(errFind => {
+                res.status(500).json({
+                    msg: errFind.message
+                })
+            })
+    }
+
     static create (req, res) {
         if (!req.body.email || !req.body.password) {
             res.status(400).json({

@@ -74,4 +74,40 @@ a:hover {
   padding: 0.5rem;
   margin: 0.5rem;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-form {
+  background-color: #212E3B;
+  color: white
+}
+
+.btn-form:hover{
+  background-color: #212E3B;
+  color: white
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+.click-able {
+  cursor: pointer;
+}
+
+.page-btn {
+  background-color: #365E7C;
+  color: white;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  width: 5vw;
+}
+
+.page-btn:hover {
+  color: white;
+  outline: 0;
+  border: 3px solid lightblue;
+  -webkit-box-shadow: inset 5px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 5px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }

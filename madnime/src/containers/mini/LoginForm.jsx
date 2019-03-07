@@ -1,11 +1,87 @@
 import React, { Component } from 'react'
+import { firebase, provider } from '../../api/firebase'
 
-export default class LoginForm extends Component {
+//Store
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { gooSign, login } from '../../store/actions/user'
+import { getFav } from '../../store/actions/fav'
+
+class LoginForm extends Component {
+  state = {
+    email: '',
+    password: ''
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  } 
+
+  gooSign = () => {
+    firebase.auth().signInWithPopup(provider)
+      .then((result) => {
+        var user = result.user;
+        this.props.gooSign({
+          name: user.displayName,
+          email: user.email
+        })
+        .then((data) => {
+          if (data) {
+            this.props.getFav()
+            this.props.history.push('/')
+            // this.props.history.push(`${this.props.location.state.from.pathname}`)
+          }
+        })
+      })
+      .catch(function(error) {
+        console.log(error)
+      })
+  }
+
+  login = (e) => {
+    e.preventDefault()
+    // console.log(this.props)
+    let { email, password } = this.state 
+    let data = {
+      email, password
+    }
+
+    this.props.login(data)
+      .then( data => {
+        if (data) {
+          this.props.getFav()
+          this.props.history.push('/')
+          // this.props.history.push(`${this.props.location.state.from.pathname}`)
+        }
+      })
+  }
+
   render() {
+    const { email, password } = this.state
     return (
-      <div>
-        
+      <div style={{ paddingBottom: '3rem'}} className="container mt-3 w-50 my-card">
+        <legend>Login</legend>
+        <form onSubmit={this.login} className="text-left ">
+          <div className="form-group">
+            <label>Email address</label>
+            <input type="email" className="form-control" name="email" value={ email } onChange={this.handleChange.bind(this)}  aria-describedby="emailHelp" placeholder="Email" />
+            <small className="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" className="form-control" name="password" value={ password } onChange={this.handleChange.bind(this)}  id="exampleInputPassword1" placeholder="Password" />
+          </div>
+          <button type="submit" className="btn btn-form float-right">Submit</button>
+          <button type="button" onClick={this.gooSign} className="btn btn-secondary mx-3 float-right">Google</button>
+      </form>
       </div>
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ gooSign, login, getFav }, dispatch)
+
+
+export default connect(null, mapDispatchToProps)(LoginForm)
