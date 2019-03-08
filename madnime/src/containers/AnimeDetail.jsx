@@ -23,7 +23,7 @@ class AnimeDetail extends Component {
   render() {
     let { anime, user, fav } = this.props
     let index
-    if (fav[0]) {
+    if (fav[0] && fav[0] !== 'no') {
        index = fav.findIndex(el => String(el.anime.mal_id) === String(anime.mal_id))
     }
     return (
@@ -78,7 +78,7 @@ class AnimeDetail extends Component {
                   <a href={anime.url} className="col text-left"> <h3> { anime.title }</h3></a>
                   <div className="col-1">
                   {
-                    user && (fav.length === 0 || index === -1) &&
+                    user && (fav.length === 0 || index === -1 || fav[0] === 'no' ) &&
                     <h2><i onClick={this.addFav} style={{color: 'yellow'}} className="far fa-star click-able"></i></h2>
                   }
                   {
