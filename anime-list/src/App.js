@@ -25,7 +25,7 @@ class App extends Component {
   componentDidMount() {
     this.props.checkLogin()
     // .then(() => {
-      this.props.getTopAnimes()
+    this.props.getTopAnimes()
     // })
   }
 

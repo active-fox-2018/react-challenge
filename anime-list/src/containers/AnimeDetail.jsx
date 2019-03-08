@@ -2,11 +2,29 @@ import React, { Component } from 'react'
 import img from "../assets/loading.gif"
 import { connect } from "react-redux"
 import { getAnimeDetail } from '../store/actions/apiAction';
-import { addToFavorites } from '../store/actions/userAction';
+import { addToFavorites, removeFromFavorites } from '../store/actions/userAction';
 
 class AnimeDetail extends Component {
+  state = {
+    favorite: false,
+    _id: null
+  }
+
   componentDidMount() {
     this.props.getAnimeDetail(this.props.match.params.id)
+    this.checkFav()
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (this.props.isLogin !== prevProps.isLogin) {
+      this.setState({
+        favorite: false,
+        _id: null
+      })
+    }
+    if (this.props.favorites !== prevProps.favorites) {
+      this.checkFav()
+    }
   }
 
   addToFavorites = () => {
@@ -25,18 +43,37 @@ class AnimeDetail extends Component {
     }
   }
 
+  removeFromFavorites = () => {
+    this.props.removeFromFavorites(this.state._id)
+    this.setState({
+      favorite: false,
+      _id: null
+    })
+  }
+
+  checkFav = () => {
+    let result = this.props.favorites.filter(e => e.anime.mal_id === this.props.anime.mal_id)
+    if (result[0]) {
+      this.setState({
+        favorite: true,
+        _id: result[0]._id
+      })
+    }
+  }
+
   render() {
     const { anime, loadingApi, loadingUser } = this.props
 
     return (
       <div className="container mt-2">
-        {loadingApi && <img src={img} />}
-        {loadingUser && <img src={img} />}
+        {loadingApi && <img src={img} alt="" />}
+        {loadingUser && <img src={img} alt="" />}
         {!loadingApi &&
           <div className="row no-gutters">
             <div className="col-md-3">
               <img src={anime.image_url} className="card-img" alt="..." />
-              <button type="button" className="btn btn-info mt-3" onClick={this.addToFavorites}>+ add to favorites</button>
+              {this.state.favorite && <button type="button" className="btn btn-danger mt-3" onClick={this.removeFromFavorites}>remove from favorites</button>}
+              {!this.state.favorite && <button type="button" className="btn btn-info mt-3" onClick={this.addToFavorites}>+ add to favorites</button>}
             </div>
             <div className="col-md-9">
               <div className="container">
@@ -79,7 +116,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getAnimeDetail: (id) => dispatch(getAnimeDetail(id)),
-  addToFavorites: (data) => dispatch(addToFavorites(data))
+  addToFavorites: (data) => dispatch(addToFavorites(data)),
+  removeFromFavorites: (id) => dispatch(removeFromFavorites(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnimeDetail)

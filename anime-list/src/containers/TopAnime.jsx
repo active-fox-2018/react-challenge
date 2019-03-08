@@ -11,7 +11,7 @@ class AnimeList extends Component {
     return (
       <div className="container mt-2">
         <h3 className="text-left">Anime list</h3>
-        {loading && <img src={img}/> }
+        {loading && <img src={img} alt="" /> }
         <div>
           {!loading && animes.map((anime, i) => <SingleAnime key={i} anime={anime} index={anime.rank} del={this.delete}/> )}
         </div>

@@ -3,7 +3,7 @@ import { firebase, db } from '../../api/firebase'
 export function checkLogin() {
   return dispatch => {
     dispatch({type: 'CHECK_LOGIN', payload: {status: false}})
-    return new Promise((resolve, reject) => {
+    // return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           dispatch(getFavorites(user.uid))
@@ -11,9 +11,9 @@ export function checkLogin() {
         } else {
           dispatch({type: 'CHECK_LOGIN', payload: {status: false}})
         }
-        resolve()
+        // resolve()
       });
-    })
+    // })
   }
 }
 

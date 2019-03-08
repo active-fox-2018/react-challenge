@@ -58,10 +58,11 @@ class SingleAnime extends Component {
   }
 
   removeFromFavorites = () => {
-    this.setState({
-      favorite: false
-    })
     this.props.removeFromFavorites(this.state._id)
+    this.setState({
+      favorite: false,
+      _id: null
+    })
   }
 
   render() {

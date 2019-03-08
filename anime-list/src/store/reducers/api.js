@@ -22,6 +22,13 @@ export default function (state = defaultState, action) {
     case 'GET_ANIME_DETAIL_ERR':
       return { ...state, err: true, loading: false }
 
+    case 'SEARCH_SUCCESS':
+      return { ...state, animes: payload.animes, loading: false }
+    case 'SEARCH_LOADING':
+      return { ...state, loading: true }
+    case 'SEARCH_ERR':
+      return { ...state, err: true, loading: false }
+
     default:
       return state
   }

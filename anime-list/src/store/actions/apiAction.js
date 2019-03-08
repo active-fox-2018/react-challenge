@@ -28,3 +28,19 @@ export function getAnimeDetail(id) {
       })
   }
 }
+
+export function searchAnime(query) {
+  return dispatch => {
+    dispatch({type: 'SEARCH_LOADING'})
+    axios
+      .get(`https://cors-anywhere.herokuapp.com/${url}/search/anime/?q=${query}&limit=50`)
+      .then(({data}) => {
+        console.log(data.results);
+
+        dispatch({type: 'SEARCH_SUCCESS', payload: {animes: data.results}})
+      })
+      .catch(err => {
+        dispatch({type: `SEARCH_ERR`})
+      })
+  }
+}
