@@ -1,0 +1,121 @@
+.App {
+  text-align: center;  
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 7vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background: #232526; /* fallback for old browsers */
+  min-height: 7vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.navbar {
+  width: 100%
+}
+
+.searchInput {
+  width: 500px
+}
+
+.cursor {
+  cursor: pointer
+}
+
+.container-fluid {
+  margin-top: 1%
+}
+
+/* .leftHome {
+  background-color: aliceblue;
+} */
+
+.rightHome {
+  background-color: mistyrose;
+}
+
+.raise:hover,
+.raise:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
+}
+
+.scroll {
+	float: left;
+	height: 1000px;
+	overflow-y: scroll;
+}
+
+.display-4 {
+  text-align: left
+}
+
+.overview {
+  text-align: justify
+}
+
+.titleGenre {
+  text-align: left
+}
+
+.iconUser {
+  color: white
+}
+
+.iconUser:hover {
+  color: #616364
+}
+
+.card {
+  color: #232526;
+  background-color: white;
+}
+
+.alertify-notifier .ajs-message.ajs-success {
+  border: solid 1px black;
+  color: black;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+  border: solid 1px black;
+  color: rgba(217, 92, 92, 0.95);
+  background: white;
+}
+
+.jumbotron {
+  background-color: #232526;
+  color: white
+}
+
+.list-group {
+  color: #232526;
+}
+
+.my-4 {
+  border: solid 1px;
+  color: white
+}
