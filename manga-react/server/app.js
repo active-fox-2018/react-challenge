@@ -10,7 +10,7 @@ require('dotenv').config()
 var app = express();
 app.use(cors())
 
-const url = 'mongodb://localhost/kitsu_react'
+const url = `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@ds021895.mlab.com:21895/kitsu-react`
 mongoose.connect(url, { useNewUrlParser: true })
 .then(()=>{console.log("connected")},
   err =>{console.log("err",err);}

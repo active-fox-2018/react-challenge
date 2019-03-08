@@ -1,33 +1,51 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Route, Switch} from 'react-router-dom';
-import { PrivateRoute } from './helpers/PrivateRoute'
+import { Route, Switch } from 'react-router-dom';
+import PrivateRoute from './helpers/PrivateRoute'
 import Navbar from './container/manga/Navbar'
-import Login from './container/LoginPage'
+import Home from './container/Home'
+import Login from './container/Login'
+import { connect } from 'react-redux'
+import { checkLogin } from './store/actions/kitsuActions'
+import { BrowserRouter } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory'
+
 //components
 import Manga from './container/Manga'
 import DetailManga from './container/manga/DetailManga'
 
-//store
-import { Provider } from 'react-redux'
-import store from './store'
+export const history = createBrowserHistory()
 
 class App extends Component {
+  componentDidMount = ()=> {
+    this.props.checkLogin()
+  }
+
   render() {
     return (
-      <Provider store={store}>
+      <BrowserRouter>
         <div className="App">
-        <Navbar></Navbar>
+          
+          <Navbar />
+
           <Switch>
-            <Route exact path='/' component={Manga}/>
-            <PrivateRoute exact path='/details/:id' component={(props) => <DetailManga {...props}/>}/> 
+            <Route exact path='/' component={Home}/>
+            <PrivateRoute exact path='/manga-collection' component={Manga}/>
             <Route exact path='/login' component={Login}/>
+            <Route path='/details/:id' component={(props) => <DetailManga {...props}/>}/> 
             <Route render={() => <h3>NOT FOUND</h3>}/>
           </Switch>
         </div>
-      </Provider>
+      </BrowserRouter>
     );
   }
 }
+const mapStateToProps = (state) => ({
+  isLogin: state.login.isLogin,
+})
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  checkLogin: ()=> dispatch(checkLogin())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

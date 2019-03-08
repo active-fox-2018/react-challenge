@@ -3,6 +3,8 @@ const Schema = mongoose.Schema
 const axios = require('axios')
 
 const mangaSchema = new Schema({
+    userId: {type: Schema.Types.ObjectId, ref: 'User'},
+    id: Number,
     title: String,
     canonicalTitle: String,
     image: String,
@@ -12,15 +14,14 @@ const mangaSchema = new Schema({
 })
 
 mangaSchema.pre('save', async function(next) {
-    console.log(this.title, '===========')
     try {
         let fetch = await axios({
             url: `https://kitsu.io/api/edge/manga?filter[text]=${this.title}`,
             method: 'get'
         })
-        // console.log(fetch.data.data.length, '=============== length')
         let data = fetch.data.data
         if(data.length > 0) {
+            this.id = data[0].id
             this.canonicalTitle = data[0].attributes.canonicalTitle
             this.rating = Number(data[0].attributes.averageRating)
             this.synopsis = data[0].attributes.synopsis
@@ -33,7 +34,7 @@ mangaSchema.pre('save', async function(next) {
         }
         next()
     } catch (error) {
-        
+        return false
     }
 })
 

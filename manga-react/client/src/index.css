@@ -35,3 +35,44 @@ code {
 input {
   height: 24px;
 }
+
+.tron {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.tron img {
+  width: 100%
+}
+
+.centered {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.centered form {
+  height: 45vh;
+  width: 50vw;
+  border: 4px solid sandybrown
+}
+
+.centeredSearch {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.centeredSearch form input {
+  width: 100vh
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

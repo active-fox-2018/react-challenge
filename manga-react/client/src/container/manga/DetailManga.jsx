@@ -1,35 +1,55 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import { connect } from 'react-redux'
+import { getDetail } from '../../store/actions/apiActions'
 
-export default class DetailManga extends Component {
-    state = {
-        manga: {},
-    }
-    async componentDidMount () {
-        try {
-            let fetch = await axios({
-                url: `https://kitsu.io/api/edge/manga?filter[id]=${this.props.match.params.id}`,
-                method: 'get'
-            })
-            this.setState({
-                manga: fetch.data.data[0],
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
+class DetailManga extends Component {
+  componentDidMount () {
+      this.props.getDetail(this.props.match.params.id)
+  }
   render() {
-    let { manga } = this.state
-    
+    let { detail } = this.props 
     return (
       <div>
           {
-            manga.attributes && <div>
-                <img src={manga.attributes.posterImage.tiny} alt=""/>
-                <h1>{manga.attributes.canonicalTitle}</h1>
+            detail.id && 
+            <div className="container mt-3">
+              <div className="row">
+                <div className="col-4">
+                  <img src={detail.attributes.posterImage.small} alt=""/>
+                </div>
+                <div className="col">
+                  <div className="row flex-column">
+                    <h1>{detail.attributes.canonicalTitle}</h1>  
+                    <h4>Synopsis:</h4>
+                    <p>{detail.attributes.synopsis}</p>
+                  </div>
+                  <div className="row">
+                    <div className="col">Japanese Title: {detail.attributes.titles.en_jp}</div>
+                    <div className="col">Age Rating: {detail.attributes.ageRating}</div>
+                  </div>
+                  <div className="row">
+                    <div className="col">Start Date: {detail.attributes.startDate}</div>
+                    <div className="col">End Date: {detail.attributes.endDate}</div>
+                  </div>
+                  <div className="row">
+                    <div className="col">Popularity: {detail.attributes.popularityRank}</div>
+                    <div className="col">Like: {detail.attributes.userCount}</div>
+                  </div>
+                </div>
+              </div>
             </div>
           }
       </div>
     )
   }
 }
+
+const matStateToProps = (state) => ({
+  detail: state.api.detail
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getDetail: (id) => dispatch(getDetail(id))
+})
+
+export default connect(matStateToProps, mapDispatchToProps)(DetailManga)

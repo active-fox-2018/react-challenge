@@ -8,7 +8,7 @@ export default function (state=defaultState, action) {
 
     switch (type) {
         case 'SET_DATA': 
-            return { data: action.data};
+            return { ...state, data: action.data};
         default: 
             return state;
     }

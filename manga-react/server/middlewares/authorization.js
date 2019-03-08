@@ -12,5 +12,5 @@ module.exports = {
             }).catch((err) => {
                 res.status(400).json({msg: `You're Not Authorized, Please Log In / Register First!`})
             });
-    },
+    }
 }
