@@ -24,7 +24,6 @@ import { PrivateRoute } from './helpers/PrivateRoute'
 
 class App extends Component {
   componentDidMount() {
-    // console.log(window.location.pathname)
     if (localStorage.token) {
       this.props.findOne()
       this.props.getFav()

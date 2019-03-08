@@ -73,8 +73,8 @@ class LoginForm extends Component {
             <label>Password</label>
             <input type="password" className="form-control" name="password" value={ password } onChange={this.handleChange.bind(this)}  id="exampleInputPassword1" placeholder="Password" />
           </div>
-          <button type="submit" className="btn btn-form float-right">Submit</button>
-          <button type="button" onClick={this.gooSign} className="btn btn-secondary mx-3 float-right">Google</button>
+          <button type="submit" className="btn btn-google float-right">Submit</button>
+          <button type="button" onClick={this.gooSign} className="btn btn-google mx-3 float-right"> <img style={{ height: '20px', width: '20px'}} src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png" alt="G"/> Google</button>
       </form>
       </div>
     )

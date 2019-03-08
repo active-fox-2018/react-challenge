@@ -11,10 +11,17 @@ export function getFav () {
             }
         })
         .then(({ data }) => {
-            dispatch({
-                type: 'SET_FAV',
-                data
-            })
+            if (data.length === 0 ) {
+                dispatch({
+                    type: 'SET_FAV',
+                    data: ['no']
+                })
+            } else {
+                dispatch({
+                    type: 'SET_FAV',
+                    data
+                })
+            }
         })
         .catch(err => {
             dispatch({

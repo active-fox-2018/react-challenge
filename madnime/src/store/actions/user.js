@@ -91,6 +91,11 @@ export function logout () {
             type: 'SET_USER',
             data: null
         })
+        dispatch({
+            type: 'SET_FAV',
+            data: null
+        })
+
         firebase.auth().signOut()
             .then(function() {
             })
@@ -115,6 +120,7 @@ export function findOne () {
             })
         })
         .catch((error) => {
+            alertify.error(`Oops something went wrong`)
             dispatch({
                 type: 'SET_ERROR',
                 data: error

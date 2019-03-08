@@ -83,8 +83,10 @@ a:hover {
 }
 
 .btn-form:hover{
-  background-color: #212E3B;
-  color: white
+  color: black;
+  background-color: #fff;
+  box-shadow: 0px 15px 20px rgba(142, 178, 237, 0.4);
+  transform: translateY(-7px);
 }
 
 .dropdown-item {
@@ -110,4 +112,32 @@ a:hover {
   border: 3px solid lightblue;
   -webkit-box-shadow: inset 5px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 5px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.fav-title {
+  font-family: Lobster, cursive;
+  color: #212E3B;
+}
+
+.btn-google {
+  width: 140px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: rgb(247, 247, 247);
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  }
+
+.btn-google:hover {
+  background-color: #fff;
+  box-shadow: 0px 15px 20px rgba(142, 178, 237, 0.4);
+  transform: translateY(-7px);
 }

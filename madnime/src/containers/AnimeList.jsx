@@ -22,7 +22,6 @@ class AnimeList extends Component {
   }
 
   componentDidUpdate (prev) {
-    // console.log(prev)
     if (this.props.match.params.id !== prev.match.params.id) {
       this.page()
     }
