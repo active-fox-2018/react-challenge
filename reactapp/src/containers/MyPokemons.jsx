@@ -19,11 +19,12 @@ class MyPokemons extends Component {
 
   componentDidMount = () => {
     db.collection('messages')
-    .orderBy("createdAt")
+    .orderBy("createdAt", 'desc')
+    .limit(5)
       .onSnapshot((docs) => {
         let result = []
         docs.forEach(doc => {
-          result.push({
+          result.unshift({
             id: doc.id,
             name: doc.data().name,
             message: doc.data().message,
