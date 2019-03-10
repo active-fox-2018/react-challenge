@@ -5,7 +5,7 @@ const { authUser } = require('../middlewares/authorization')
 const manga = require('./manga')
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.json({msg: 'Connected...'});
 });
 
 router.use('/mangas', authUser, manga)

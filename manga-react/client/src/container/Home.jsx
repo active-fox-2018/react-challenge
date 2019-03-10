@@ -45,19 +45,6 @@ class Home extends Component {
               </div>
             </div>
             <div className="container">
-              {/* <div className="mt-3">
-                <nav aria-label="Page navigation example">
-                    <ul className="pagination justify-content-end">
-                      <li className="page-item disabled">
-                        <a className="page-link" tabIndex="-1">Prev</a>
-                      </li>
-                      <li className="page-item"><a className="page-link">1</a></li>
-                      <li className="page-item">
-                        <a className="page-link">Next</a>
-                      </li>
-                    </ul>
-                </nav>
-              </div> */}
               <div className="row mt-3">
                 {mangas.map(e => <SingleManga key={e.id} loading={this.props.loadingBookmark} bookmark={() => this.bookmark(e.attributes.canonicalTitle, e.id)} manga={{
                         id: e.id,
@@ -71,7 +58,6 @@ class Home extends Component {
             </div>
           </div>
         }
-        
       </div>
     )
   }

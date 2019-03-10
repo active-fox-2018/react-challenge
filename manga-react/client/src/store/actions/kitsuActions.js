@@ -47,10 +47,10 @@ export function loginFirebase () {
             alertify.success('Wellcomeback . .')
             return true
           })
-          .catch(function(error) {
+        .catch(function(error) {
             dispatch({type: 'LOGIN_ERROR'})
             return false
-          });
+        });
     }
 }
 
@@ -90,6 +90,7 @@ export function manualLogin (data) {
             alertify.success('Wellcomeback . .')
             return true
         } catch (error) {
+            alertify.error(error.response.data.msg)
             dispatch({type: 'LOGIN_ERROR'})
             return false
         }
@@ -113,6 +114,7 @@ export function addNewManga (title, id) {
             dispatch({type: 'PUSH_MANGA', payload: post.data})
             alertify.success('New Manga Added')
         } catch (error) {
+            console.log(error.response)
             alertify.error(error.response.data.msg)
         }
     }
