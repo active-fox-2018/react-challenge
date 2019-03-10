@@ -24,7 +24,7 @@ export default class search extends Component {
     return (
       <div>
         <form onSubmit={this.submit}>
-         <Input icon={<Icon name='search' inverted circular link />} placeholder='Search...' name="search" onChange={this.handleChangeSearch.bind(this)}/>
+         <Input className="search" icon={<Icon name='search' inverted circular link />} placeholder='Search...' name="search" onChange={this.handleChangeSearch.bind(this)}/>
         </form>
       </div>
     )

@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  margin:0 auto !important;
+  background-color:peachpuff;
+}
+
+.ChatRoom {
+  max-height: 800px;
+  overflow: scroll;
+  overflow-x:hidden;
+  
+}
+
+.boxMessage{
+  width: 100%;
+  padding: 10px;
+}
+
+.rowCustom {
+  display: flex;
+  align-self: left
+}
+
+.inputForMessage{
+  margin: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+textarea {
+  height: 30px;
+  width: 369px
+}
+
+button {
+  left:0
+}
+
+p, h3 {
+  text-align: left
+}
+

@@ -36,8 +36,6 @@ export default class Pokemon extends Component {
     })
   }
 
-
-
   state = {
     pokemons: []
   }
