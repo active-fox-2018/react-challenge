@@ -3,6 +3,7 @@ import img from "../assets/loading.gif"
 import { connect } from "react-redux"
 import { getAnimeDetail } from '../store/actions/apiAction';
 import { addToFavorites, removeFromFavorites } from '../store/actions/userAction';
+import Swal from 'sweetalert2'
 
 class AnimeDetail extends Component {
   state = {
@@ -39,6 +40,11 @@ class AnimeDetail extends Component {
         this.props.addToFavorites(obj)
       }
     } else {
+      Swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Please login first!'
+      })
       console.log('login dulu bro');
     }
   }

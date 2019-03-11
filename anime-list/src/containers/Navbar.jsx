@@ -41,6 +41,7 @@ class Navbar extends Component {
 
   search = () => {
     let q = this.state.query
+    this.setRedirect()
     this.props.searchAnime(q)
   }
 

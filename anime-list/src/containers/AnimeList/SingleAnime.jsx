@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addToFavorites, removeFromFavorites } from '../../store/actions/userAction';
+import Swal from 'sweetalert2'
 
 class SingleAnime extends Component {
   state = {
@@ -53,7 +54,11 @@ class SingleAnime extends Component {
         this.props.addToFavorites(obj)
       }
     } else {
-      console.log('login dulu bro');
+      Swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Please login first!'
+      })
     }
   }
 

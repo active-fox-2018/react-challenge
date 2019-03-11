@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { firebase, provider } from '../api/firebase'
 import { connect } from 'react-redux'
+import Swal from 'sweetalert2'
 
 // Actions
 import { checkLogin } from '../store/actions/userAction'
@@ -12,10 +13,20 @@ class Login extends Component {
   }
 
   login = () => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500
+    })
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
         this.setRedirect()
         this.props.checkLogin()
+        Toast.fire({
+          type: 'success',
+          title: 'Signed in successfully'
+        })
       })
       .catch((error) => {
         console.log(error);

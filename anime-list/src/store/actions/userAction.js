@@ -1,4 +1,11 @@
 import { firebase, db } from '../../api/firebase'
+import Swal from 'sweetalert2'
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1500
+})
 
 export function checkLogin() {
   return dispatch => {
@@ -22,6 +29,10 @@ export function logout() {
     dispatch({type: 'CHECK_LOGIN', payload: {status: true}})
     firebase.auth().signOut()
       .then(function() {
+        Toast.fire({
+          type: 'success',
+          title: 'Signed out successfully'
+        })
         dispatch({type: 'CHECK_LOGIN', payload: {uid: null, name: null, email: null, status: false}})
       })
       .catch(function(error) {
@@ -35,6 +46,10 @@ export function addToFavorites(data) {
     dispatch({type: 'ADD_TO_FAVORITES_LOADING'})
     db.collection("favorites").add(data)
       .then(() => {
+        Toast.fire({
+          type: 'success',
+          title: 'Successfully add to favorites'
+        })
         dispatch({type: 'ADD_TO_FAVORITES_SUCCESS'})
       })
       .catch((err) => {
@@ -64,6 +79,10 @@ export function removeFromFavorites(id) {
     favorite
       .delete()
       .then(() => {
+        Toast.fire({
+          type: 'success',
+          title: 'Successfully remove from favorites'
+        })
         dispatch({type: 'REMOVE_FROM_FAVORITES_SUCCESS'})
       })
       .catch((err) => {
