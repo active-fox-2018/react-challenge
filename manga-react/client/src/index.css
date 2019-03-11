@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.card:hover {
+  box-shadow: 4px 4px 10px rgb(158, 158, 158);
+}
+
+.button {
+  border: none;
+  background: crimson;
+  color: white;
+  font-size: 14px;
+}
+
+.card-title {
+  margin-top: -10px;
+}
+
+.card .button {
+  margin-top: 10px;
+}
+
+input {
+  height: 24px;
+}
+
+.tron {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.tron img {
+  width: 100%
+}
+
+.centered {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.centered form {
+  height: 45vh;
+  width: 50vw;
+  border: 4px solid sandybrown
+}
+
+.centeredSearch {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.centeredSearch form input {
+  width: 100vh
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
