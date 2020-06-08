@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux'
 
 class AnimeDetail extends Component {
   componentDidMount () {
-    // console.log(this.props.fav, this.props.user)
     this.props.sendDetail(this.props.match.params.id)
   }
 
@@ -78,11 +77,8 @@ class AnimeDetail extends Component {
                   <a href={anime.url} className="col text-left"> <h3> { anime.title }</h3></a>
                   <div className="col-1">
                   {
-                    user && (fav.length === 0 || index === -1 || fav[0] === 'no' ) &&
-                    <h2><i onClick={this.addFav} style={{color: 'yellow'}} className="far fa-star click-able"></i></h2>
-                  }
-                  {
-                    user && fav[0] && index !== -1 &&
+                    user && (fav.length === 0 || index === -1 || fav[0] === 'no' ) ?
+                    <h2><i onClick={this.addFav} style={{color: 'yellow'}} className="far fa-star click-able"></i></h2> :
                     <h2><i onClick={() => this.removeFav(index)} style={{color: 'yellow'}} className="fas fa-star click-able"></i></h2>
                   }
                   </div>
